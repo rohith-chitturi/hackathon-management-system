@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px; /* Decreased max width */
+            margin: auto;
+            padding: 15px; /* Reduced padding */
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        input {
+            margin-bottom: 10px; /* Reduced margin */
+            padding: 8px; /* Reduced padding */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 8px; /* Reduced padding */
+            background-color: linear-gradient(135deg, #ff6b6b, #f9a826);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        button:hover {
+            background-color:  linear-gradient(135deg, #ff6b6b, #f9a826);
+        }
+
+        #payment-status {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #team-details {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Payment</h2>
+        <p>Please enter your payment details below:</p>
+        
+        <form id="payment-form">
+            <input type="text" id="card-name" placeholder="Cardholder Name" required>
+            <input type="text" id="card-number" placeholder="Card Number" required>
+            <input type="text" id="card-expiry" placeholder="Expiry Date (MM/YY)" required>
+            <input type="text" id="card-cvc" placeholder="CVC" required>
+            <button type="submit">Pay with Card</button>
+        </form>
+
+        <h3>Or pay with:</h3>
+        <button onclick="window.location.href='google-pay.html'">Google Pay</button>
+        <button onclick="window.location.href='phonepe.html'">PhonePe</button>
+
+        <div id="payment-status"></div>
+
+        <h3>Registered Team Members</h3>
+        <div id="team-details" style="display:none;"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3ZAFo5vFC6eG1fcXNkVgm4XDAm37XoNc",
+            authDomain: "hackathon-management-system.firebaseapp.com",
+            projectId: "hackathon-management-system",
+            storageBucket: "hackathon-management-system.appspot.com",
+            messagingSenderId: "891451433042",
+            appId: "1:891451433042:web:79ab509d8d77daa5e1ff8b",
+            measurementId: "G-J0J976M0Y0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Function to fetch team members from the database
+        async function fetchTeamMembers() {
+            const teamDetailsDiv = document.getElementById('team-details');
+            teamDetailsDiv.innerHTML = ''; // Clear previous content
+
+            try {
+                const snapshot = await get(child(ref(db), 'teamMembers'));
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        const member = childSnapshot.val();
+                        const memberInfo = document.createElement('div');
+                        memberInfo.innerText = `${member.name} - ${member.email}`;
+                        teamDetailsDiv.appendChild(memberInfo);
+                    });
+                } else {
+                    teamDetailsDiv.innerText = "No team members registered.";
+                }
+            } catch (error) {
+                console.error("Error fetching team members:", error);
+                teamDetailsDiv.innerText = "Failed to load team members.";
+            }
+        }
+
+        // Function to display team members after payment
+        function displayTeamDetails() {
+            const teamDetailsDiv = document.getElementById('team-details');
+            teamDetailsDiv.style.display = 'block'; // Show the team details section
+            fetchTeamMembers(); // Fetch and display team members
+        }
+
+        // Simulate card payment processing
+        document.getElementById('payment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simulate payment processing
+            document.getElementById('payment-status').innerText = "Payment successful! Thank you for your purchase.";
+
+            // Display team details after successful payment
+            displayTeamDetails();
+
+            // Redirect to home.html after a short delay (e.g., 2 seconds)
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 2000); // Adjust the delay as needed
+        });
+    </script>
+</body>
+</html>

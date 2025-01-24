@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhonePe</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            background-color:  linear-gradient(135deg, #ff6b6b, #f9a826);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color:  linear-gradient(135deg, #ff6b6b, #f9a826);
+        }
+
+        #phonepe-status {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PhonePe</h2>
+        <p>Please enter your payment details below:</p>
+        
+        <form id="phonepe-form">
+            <input type="text" id="phonepe-email" placeholder="Email" required>
+            <input type="text" id="phonepe-amount" placeholder="Amount" required>
+            <button type="submit">Pay with PhonePe</button>
+        </form>
+
+        <div id="phonepe-status"></div>
+        <div class="back-button">
+            <button onclick="window.location.href='homepage.html'"">Goto home page</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('phonepe-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Simulate payment processing
+            const email = document.getElementById('phonepe-email').value;
+            const amount = document.getElementById('phonepe-amount').value;
+
+            // Simulate successful payment
+            document.getElementById('phonepe-status').innerText = `Payment of ₹${amount} successful via PhonePe! Thank you, ${email}.`;
+        });
+    </script>
+</body>
+</html>

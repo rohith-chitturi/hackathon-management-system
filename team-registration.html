@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Team Registration</h2>
+        <form id="team-registration-form">
+            <input type="text" id="member-name" placeholder="Team Member Name" required>
+            <input type="email" id="member-email" placeholder="Team Member Email" required>
+            <button type="submit">Add Team Member</button>
+        </form>
+        <div id="registration-status"></div>
+        <button id="proceed-to-payment" style="display:none;">Proceed to Payment</button>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

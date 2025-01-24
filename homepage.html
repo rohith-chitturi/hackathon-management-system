@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #f9a826);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        .user-profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        main {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .greeting {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #f9a826;
+        }
+        .timer {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .message {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .venue-info {
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline {
+            list-style: none;
+            padding: 0;
+            position: relative;
+            margin: 20px 0;
+        }
+        .timeline-item {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+        .timeline-item:hover {
+            transform: scale(1.02);
+        }
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #007bff;
+            z-index: 0;
+        }
+        .timeline-item:first-child:before {
+            top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <span>Tech Innovators 2024</span>
+        </div>
+        <div class="user-profile">
+            <img src="https://via.placeholder.com/40" alt="User Image">
+            <button onclick="logout()" style="background: none; border: none; cursor: pointer;">Logout</button>
+        </div>
+    </header>
+    <main>
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.35/build/spline-viewer.js"></script>
+        <spline-viewer url="https://prod.spline.design/d6PFMGyqJlIFoaNg/scene.splinecode"></spline-viewer>
+        <div class="greeting" id="greeting"></div>
+        <div class="timer" id="timer"></div>
+        <div id="latestMessage" class="message"></div>
+        <div class="venue-info">
+            <h2>Venue Information</h2>
+            <p>Classroom A - Main Hall</p>
+            <p>Classroom B - Conference Room</p>
+            <p>Workshop Area - Basement Level</p>
+        </div>
+        <h2>Timeline</h2>
+        <div class="timeline-container">
+            <ul class="timeline" id="timelineContainer">
+                <li class="timeline-item">November 5, 2024 - Introduction</li>
+                <li class="timeline-item">November 5, 2024 - GitHub Introduction</li>
+                <li class="timeline-item">November 6, 2024 - Problem Statement Selection</li>
+                <li class="timeline-item">November 6, 2024 - Coding</li>
+                <li class="timeline-item">November 7, 2024 - Submission</li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <p>Contact us: <a href="mailto:info@techinnovators.com">info@techinnovators.com</a></p>
+        <p>© 2024 Tech Innovators</p>
+    </footer>
+
+    <script>
+        const userName = "User"; // Replace with dynamic user name
+        document.getElementById('greeting').innerText = `Welcome, ${userName}!`;
+
+        // Set the end time for the hackathon
+        const endTime = new Date("2024-11-07T17:00:00"); // Set end time here
+
+        // Timer functionality
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const timeLeft = endTime - now;
+
+                if (timeLeft <= 0) {
+                    document.getElementById('timer').innerText = "Hackathon has ended!";
+                    return;
+                }
+
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById('timer').innerText = `Time left: ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+
+        // Function to display the latest message
+        function displayMessage(content) {
+            const messageContainer = document.getElementById('latestMessage');
+            messageContainer.innerText = content; // Replace previous message
+        }
+
+        // Example usage: Simulate receiving messages
+        startTimer();
+        setInterval(() => {
+            displayMessage('New message from the conductor!'); // Simulates a new message
+        }, 5000); // Simulates a new message every 5 seconds
+
+        // Logout function
+        function logout() {
+            alert('Logged out successfully!');
+            // Redirect to login page or perform logout operation
+        }
+    </script>
+</body>
+</html>
